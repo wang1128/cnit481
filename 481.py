@@ -18,11 +18,11 @@ def recommendation(question,category):
     rec_list=[]
     reversed_list=[]
     for idx,cag in enumerate(category_list):
-        if category in cag:
+        if category.lower() in cag.lower():
 
             new_question_list.append(question_list[idx])
     for element in new_question_list:
-        if similar(question,element)>0.5:
+        if similar(question,element)>0.3:
             rec_list.append((element,similar(question,element)))
 
     if rec_list.__len__()==0:
@@ -33,16 +33,18 @@ def recommendation(question,category):
 def question():
     que = raw_input('Write your question: ')
     cag = raw_input('Category: ')
-    recommendation(que,cag)
-    list = recommendation("Does obseity relate to race?","Race")
-    reversed_list = sorted(list, key=lambda list: list[1], reverse=True)
-    print("The top 2 recommendations are :")
-    print(reversed_list[0][0])
-    print(reversed_list[1][0])
-#print(list)
-#list2=sorted(list, key=lambda list: list[1], reverse=True)
-#print(list2)
-#que = raw_input('Write your question: ')
+    #recommendation(que,cag)
+    list = recommendation(que,cag)
+    if list.__len__() == 1:
+        reversed_list = sorted(list, key=lambda list: list[1], reverse=True)
+        print("The top 1 recommendation is :")
+        print(reversed_list[0][0])
+        #print(reversed_list[1][0])
+    if list.__len__() != 0 and list.__len__() != 1 :
+        reversed_list = sorted(list, key=lambda list: list[1], reverse=True)
+        print("The top 2 recommendations are :")
+        print(reversed_list[0][0])
+        print(reversed_list[1][0])
+        #print(reversed_list)
 
-#cag = raw_input('Category: ')
-#recommendation(que,cag)
+question()
